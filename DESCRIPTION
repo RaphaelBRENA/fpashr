@@ -32,6 +32,9 @@ Description: Provides tools for constructing continuous density estimators
     validation and visualization.
 License: GPL (>= 3)
 Encoding: UTF-8
+Suggests: 
+    MASS
 LazyData: true
 Depends: R (>= 4.5.0)
 URL: https://github.com/RaphaelBRENA/fpashr
+RoxygenNote: 7.3.3
