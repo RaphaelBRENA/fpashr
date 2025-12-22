@@ -1,16 +1,37 @@
 Package: fpashr
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Continuous Density Estimation via Frequency Polygons and Average Shifted Histogram
 Version: 0.1.0
 Authors@R: c(
     person(
-      "Jane", "Doe",
-      email = "jane@example.com",
+      "Raphaël", "Brena",
+      email = "raphael.brena2005@gmail.com",
       role = c("aut", "cre")
+    ),
+    person(
+      "Tom", "McGrory",
+      email = "tom.mcgrory.2021@mumail.ie",
+      role = c("aut")
+    ),
+    person(
+      "Kate", "Whelan",
+      email = "Katewhelan80@gmail.com",
+      role = c("aut")
+    ),
+    person(
+      "Conor", "Foran",
+      email = "conor.foran.2023@mumail.ie",
+      role = c("aut")
     )
   )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
-License: What license is it under?
+Description: Provides tools for constructing continuous density estimators 
+    based on histogram refinements. The package implements Frequency 
+    Polygons, which provide continuity by connecting histogram bin midpoints, 
+    and Average Shifted Histograms, which reduce bin-edge bias by 
+    averaging multiple shifted partitions. Includes functions for density 
+    validation and visualization.
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
+Depends: R (>= 4.5.0)
+URL: https://github.com/RaphaelBRENA/fpashr
