@@ -2,7 +2,7 @@
 #'
 #' Calculates the values needed to construct a frequency polygon from numeric data, without producing a plot
 #'
-#' @importFrom graphics hist
+#'
 #'
 #' @param x A numeric vector of observations
 #' @param bins The number of bins used to construct the histogram
