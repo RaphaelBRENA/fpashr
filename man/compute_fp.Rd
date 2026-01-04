@@ -25,8 +25,9 @@ An object of class \code{"frequency_polygon"} containing:
 Calculates the values needed to construct a frequency polygon from numeric data, without producing a plot
 }
 \examples{
-data(faithful)
-fp <- compute_fp(faithful$waiting, bins = 10)
+library(MASS)
+data(geyser)
+fp <- compute_fp(geyser$waiting, bins = 10)
 fp$mids
 
 }

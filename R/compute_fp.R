@@ -15,6 +15,7 @@
 #'   \item binwidth: The width of the bins
 #'}
 #' @examples
+#' library(MASS)
 #' data(geyser)
 #' fp <- compute_fp(geyser$waiting, bins = 10)
 #' fp$mids

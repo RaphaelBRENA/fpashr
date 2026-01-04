@@ -1,0 +1,40 @@
+---
+title: "fpashr: Continuous Density Estimation"
+author: "Raphaël Brena, Tom McGrory, Kate Whelan, Conor Foran"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{fpashr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+#library(fpashr)
+devtools::load_all()
+library(MASS)
+library(ggplot2)
+```
+
+# Introduction
+The `fpashr` package provides tools for continuous density estimation from numeric data. It includes:
+
+- **Frequency Polygons (FP)** – connect histogram bin midpoints to create a continuous density curve.  
+- **Average Shifted Histograms (ASH)** – reduce bin-edge bias by averaging multiple shifted histograms.  
+- **Density Validation** – check that the estimated densities integrate to approximately 1 using `validate_density()`.
+
+This vignette demonstrates how to:
+
+1. Compute FP and ASH density estimates  
+2. Visualize them with `plot.hist_estimate()`  
+3. Validate the densities numerically with `validate_density()`
+
+# Load the Example Data
+
+
