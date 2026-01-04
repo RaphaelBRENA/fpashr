@@ -45,14 +45,16 @@ plot.hist_estimate <- function(x, bins = 30, ...) {
     "Histogram Density Estimate"
   }
 
-    ggplot(data = df, aes(x = value)) +
-    geom_histogram(aes(y = after_stat(density)),
-    bins = bins, fill = "grey'", colour - "White™") +
-    geom_line(data = dens, aes(x = x, y = y), linewidth = 1.5) +
-    theme_bw() +
-    xlab ("waiting") +
-    ylab ("density") +
-    ggtitle(title)
+    p <- ggplot(data = df, aes(x = value)) +
+         geom_histogram(aes(y = after_stat(density)),
+         bins = bins, fill = "grey", colour = "white") +
+         geom_line(data = dens, aes(x = x, y = y), linewidth = 1.5) +
+         theme_bw() +
+         xlab ("waiting") +
+         ylab ("density") +
+         ggtitle(title)
+
+    return(p)
 
 }
 
