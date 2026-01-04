@@ -13,9 +13,11 @@
 #'
 #'
 #' @importFrom ggplot2 ggplot aes geom_histogram geom_line
-#' @importFrom ggplot2 theme_bw xlab lab ggtitle after_stat
+#' @importFrom ggplot2 theme_bw xlab ylab ggtitle after_stat
 #'
 #' @export
+#' @exportS3Method plot hist_estimate
+
 #' @author Kate Whelan - <\email{katewhelan80@gmail.com}>
 #' @seealso \code{\link{compute_ash}}, \code{\link{compute_fp}}
 #'
@@ -31,10 +33,6 @@
 #'
 #'
 #'
-#ggplot2 aes uses value, density and y as column names, not variables
-utils::globalVariables(c("value", "density", "y"))
-
-
 plot.hist_estimate <- function(x, bins = 30, ...) {
 
   if(!inherits(x,"hist_estimate")) {
@@ -68,7 +66,8 @@ plot.hist_estimate <- function(x, bins = 30, ...) {
 
 
 
-
+#ggplot2 aes uses value, density and y as column names, not variables
+utils::globalVariables(c("value", "density", "y"))
 
 
 
