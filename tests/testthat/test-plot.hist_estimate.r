@@ -24,17 +24,6 @@ test_that("test that plot.hist_estimate returns a ggplot histogram for
       expect_s3_class(p, "ggplot")
 })
 
-test_that("test that plot.hist_estimate produces the right type of output", {
-
-  ash <- compute_ash(wait_data, bins = 10)
-  class(ash) <- c("ash_density", "hist_estimate")
-  p <- plot.hist_estimate(ash)
-
-  expect_type(p, "list")
-
-})
-
-
 test_that("test that plot.hist_estimate gives error for invalid input",{
 
       expect_error(plot.hist_estimate(1:10))

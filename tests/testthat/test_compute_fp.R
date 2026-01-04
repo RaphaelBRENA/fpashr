@@ -5,9 +5,9 @@ test_that("compute_fp returns correct structure", {
   fp <- compute_fp(faithful$waiting, bins = 10)
 
   expect_s3_class(fp, "frequency_polygon")
-  expect_type(fp$mids, "double")
+  expect_type(fp$x, "double")
   expect_type(fp$y, "double")
-  expect_length(fp$mids, 10)
+  expect_length(fp$x, 10)
   expect_length(fp$y, 10)
 })
 

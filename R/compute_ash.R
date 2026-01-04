@@ -52,10 +52,11 @@ compute_ash <- function(x, h, m=3) {
   }
   ay <- rowMeans(densities_matrix)
   result <- list(
+    data = x,
     x = ax,
     y = ay,
     parameters = list(h=h, m=m)
   )
-  class(result) <- "ash_density"
+  class(result) <- c("ash_density", "hist_estimate")
   return(result)
 }

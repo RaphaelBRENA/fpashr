@@ -15,11 +15,11 @@
 #'   \item binwidth: The width of the bins
 #'}
 #' @examples
-#' data(faithful)
-#' fp <- compute_fp(faithful$waiting, bins = 10)
+#' data(geyser)
+#' fp <- compute_fp(geyser$waiting, bins = 10)
 #' fp$mids
 #'
-#' @author Conor Foran - <\email{conor.foran.2023@@mumail.ie}
+#' @author Conor Foran - <\email{conor.foran.2023@mumail.ie}
 #'
 #'
 #'
@@ -39,10 +39,11 @@ compute_fp <- function(x, bins = 10, density = TRUE) {
   y <- if (density) h$density else h$counts
 
   result <- list(
-    mids = h$mids,
+    data = x,
+    x = h$mids,
     y = y,
     binwidth = diff(h$breaks)[1]
   )
-  class(result) <- "frequency_polygon"
+  class(result) <- c("frequency_polygon", "hist_estimate")
   result
 }

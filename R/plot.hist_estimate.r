@@ -23,7 +23,7 @@
 #' fp <- compute_fp(geyser$waiting)
 #' plot(fp)
 #'
-#' ash <- compute_ash (geyser$waiting)
+#' ash <- compute_ash(geyser$waiting)
 #' plot(ash)
 #'
 #'
