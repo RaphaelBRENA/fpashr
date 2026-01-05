@@ -1,0 +1,71 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# fpashr R package
+### Written by Raphaël Brena, Tom McGrory, Kate Whelan and Conor Foran
+
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+## Description
+
+__fpashr__ is an R package that Provides tools for constructing continuous density estimators 
+    based on histogram refinements.
+    
+    1. `compute_fp()`: for calculating values needed to construct a frequency polygon from numeric data.
+  
+    2. `compute_ash()`: Estimates density by averaging multiple shifted histograms.
+  
+    3. `plot.hist_estimate()` method:  An S3 method that plots a histogram of a density estimate obtained from continous             histogram estimators. The estimates may be produced by either a frequency polygon or an average shifted polygon.
+    
+    4. `validate_density()`:  Uses numerical integration to verify that the total area under a density estimate is                   approximately equal to 1. 
+    
+    
+
+## Installation
+
+You can install the development version of fpashr from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("RaphaelBRENA/fpashr")
+```
+
+## Example
+
+This is a basic example which shows you how to compute a frequency polygon using the geyser dataset
+
+```{r example}
+library(fpashr)
+data(faithful)
+fp <- compute_fp(faithful$waiting,bins = 10)
+```
+
+What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+
+```{r cars}
+summary(cars)
+```
+
+You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
+
+You can also embed plots, for example:
+
+```{r pressure, echo = FALSE}
+plot(pressure)
+```
+
+In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
