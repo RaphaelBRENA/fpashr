@@ -68,4 +68,4 @@ validate_density(fp)
 #> Warning: Area deviates from 1.0 by more than tolerance (0.010000)
 ```
 
-A more thorough introduction is provided in the `climr3` vignette.
+A more thorough introduction is provided in the `fpashr` vignette.
