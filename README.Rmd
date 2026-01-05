@@ -33,7 +33,7 @@ __fpashr__ is an R package that Provides tools for constructing continuous densi
     
     4. `validate_density()`:  Uses numerical integration to verify that the total area under a density estimate is                   approximately equal to 1. 
     
-    
+    Typically, these functions are applied sequentially. A demonstration of the typical workflow of the `fpashr` package follows below.
 
 ## Installation
 
@@ -50,22 +50,24 @@ This is a basic example which shows you how to compute a frequency polygon using
 
 ```{r example}
 library(fpashr)
-data(faithful)
-fp <- compute_fp(faithful$waiting,bins = 10)
+library(MASS)
+data(geyser)
+fp <- compute_fp(geyser$waiting,bins = 10)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+A histogram can be created using our S3 method
 
-```{r cars}
-summary(cars)
+```{r}
+plot(fp)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
 
-You can also embed plots, for example:
 
-```{r pressure, echo = FALSE}
-plot(pressure)
+The density estimate can be calculated and validated numerically
+
+```{r}
+validate_density(fp)
+
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+A more thorough introduction is provided in the `climr3` vignette.
