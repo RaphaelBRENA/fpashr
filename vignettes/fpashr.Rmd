@@ -6,34 +6,167 @@ vignette: >
   %\VignetteIndexEntry{fpashr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{ggplot2}
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
+  fig.width = 7,
+  fig.height = 5,
+  fig.align = "center",
+  message = FALSE,
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-```{r setup}
-#library(fpashr)
-devtools::load_all()
-library(MASS)
-library(ggplot2)
+```{r setup, echo = FALSE}
+library(fpashr)
 ```
 
 # Introduction
-The `fpashr` package provides tools for continuous density estimation from numeric data. It includes:
 
-- **Frequency Polygons (FP)** – connect histogram bin midpoints to create a continuous density curve.  
-- **Average Shifted Histograms (ASH)** – reduce bin-edge bias by averaging multiple shifted histograms.  
-- **Density Validation** – check that the estimated densities integrate to approximately 1 using `validate_density()`.
 
-This vignette demonstrates how to:
+The `fpashr` package provides tools for continuous density estimation from numeric data. Four functions are provided:
 
-1. Compute FP and ASH density estimates  
-2. Visualize them with `plot.hist_estimate()`  
-3. Validate the densities numerically with `validate_density()`
+  1. `compute_fp()`: Computes the quantities needed to construct a **frequency polygon (FP)** from numeric data by connecting histogram bin midpoints to form a continuous density estimate
+  
+  2. `compute_ash()`: Computes an **average shifted histogram (ASH)** density estimate by averaging multiple shifted histograms to reduce bin-edge bias
+  
+  3. `plot()`: An S3 plotting method for visualizing density estimates produced by continuous histogram estimators, including both frequency polygons and average shifted histograms
+  
+  4. `validate_density()`: Validates a density estimate by using numerical integration to check that the total area under the curve is approximately equal to 1
 
-# Load the Example Data
+Usually, these functions are applied sequentially. This vignette aims to demonstrate a typical workflow of the `fpashr` package.
 
+
+## Installation
+
+__fpashr__ will run in Windows, Mac OS X, or Linux. To install it you first need to install [R](https://cran.r-project.org/). Installing [RStudio](https://www.rstudio.com/) as desktop environment for using R is also recommended.
+
+
+Once in R you can type at the R command prompt:
+
+```{r, eval=FALSE}
+install.packages('devtools')
+devtools::install_github('RaphaelBRENA/fpashr')
+```
+
+to install the latest version of the package from the __fpashr__ [GitHub page](https://github.com/RaphaelBRENA/fpashr). 
+
+In either case, if you then type:
+
+```{r, eval=FALSE}
+library(fpashr)
+```
+
+it will load in all the __fpashr__ functions.
+
+You will need to load in a numeric dataset, for e.g., the `geyser` dataset from `MASS`, which contains eruption data for the Old Faithful geyser in Yellowstone National Park.
+
+```{r}
+library(MASS)
+data(geyser)
+```
+
+
+## `compute_fp()`
+
+The `compute_fp()` function computes the values needed to build a **frequency polygon (FP)** from numeric data. A frequency polygon is formed by joining the midpoints of histogram bins, giving a smooth, continuous summary of the data.
+
+The main input, `x`, is a numeric vector. The number of bins is set using `bins`, and `density` controls whether the output contains counts or densities (the default).
+
+The function does not produce a plot. Instead, it returns the quantities needed for plotting or checking the estimate later.
+
+```{r}
+fp <- compute_fp(geyser$waiting, bins = 10)
+
+#Midpoints
+fp$x
+
+#Counts/Densities
+fp$y
+
+#Histogram bin width
+fp$binwidth
+```
+The output is an object, with class `"frequency_polygon"` and `"hist_estimate"`, containing the bin midpoints (`x`), the corresponding values (`y`), and the bin width (`binwidth`).
+
+
+## `compute_ash()`
+
+The `compute_ash()` function computes a density estimate using an **Average Shifted Histogram (ASH)**. It averages multiple histograms shifted by fractions of the bin width to reduce the bias caused by bin edges.
+The main input, `x`, is a numeric vector. `h` sets the bin width for the underlying histograms, and `m` sets the number of shifts (default is 3).
+
+Like `compute_fp()`, this function does not produce a plot. It returns the quantities needed for plotting or validation.
+
+
+
+```{r}
+ash <- compute_ash(geyser$waiting, h = 9, m = 3)
+
+#Midpoints
+ash$x
+
+#Density values
+ash$y
+
+#Parameters used
+#Bin width (h)
+ash$parameters$h
+#Number of shifts (m)
+ash$parameters$m
+
+```
+The output is an object, with class `"ash_density"` and `"hist_estimate"`, containing the bin midpoints (`x`), the corresponding density values (`y`), and the parameters used (`h` for bin width and `m` for number of shifts).
+
+
+## `plot()`
+
+The `plot()` method displays a histogram overlaid with the density estimate for an object of class `"hist_estimate"`. It works with both frequency polygon (`compute_fp()`) and average shifted histogram (`compute_ash()`) objects.
+
+```{r}
+#Frequency polygon
+fp <- compute_fp(geyser$waiting, bins = 10)
+plot(fp)
+#Average shifted histogram
+ash <- compute_ash(geyser$waiting, h = 9, m = 3)
+plot(ash)
+
+```
+
+The function returns a `ggplot` object, so you can modify it further. For example, you could change the title:
+
+```{r}
+library(ggplot2)
+ash <- compute_ash(geyser$waiting, h = 9, m = 3)
+p <- plot(ash, fill = "magenta", line = "purple")  +
+ggtitle("ASH of Old Faithful Geyser Waiting Times")
+p
+```
+
+
+## `validate_density()`
+
+The `validate_density()` function checks that a density estimate integrates to approximately 1.0, as required for a valid probability density function. It uses numerical integration (the trapezoidal rule) to calculate the area under the curve.
+
+The main input, `x`, is an object of class `"frequency_polygon"` or `"ash_density"` produced by `compute_fp()` or `compute_ash()`. The optional tolerance parameter sets the acceptable deviation from 1.0 (default 0.01).
+
+
+```{r}
+# Validate ASH density estimate
+ash_result <- compute_ash(geyser$waiting, h = 9, m = 3)
+validation_ash <- validate_density(ash_result)
+print(validation_ash)
+
+# Validate frequency polygon density estimate
+fp_result <- compute_fp(geyser$waiting, bins = 15, density = TRUE)
+validation_fp <- validate_density(fp_result)
+print(validation_fp)
+
+# Using a custom tolerance
+validate_density(ash_result, tolerance = 0.0001)
+```
+
+
+The output is an object of class `"density_validation"` containing the total area under the density curve (`area`), the absolute deviation from 1.0 (`deviation`), the tolerance used (`tolerance`), and a logical flag indicating whether the density is valid (`valid`). If the density is not valid, printing the object will also display a warning message.

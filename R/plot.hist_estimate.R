@@ -6,7 +6,8 @@
 #'
 #' @param x An object of class \code{"hist_estimate"} produced by \code{compute_ash()}
 #' or \code{compute_fp())}.
-#' @param bins Number of bins used for histogram.
+#' @param fill The colour of the histogram bars, default is grey.
+#' @param line The colour of the line, default is black.
 #' @param ... Catches unused arguments to \code{plot}
 #'
 #' @return A \code{ggplot} object displaying a histogram of a given density estimate
@@ -33,10 +34,16 @@
 #'
 #'
 #'
-plot.hist_estimate <- function(x, bins = 30, ...) {
+plot.hist_estimate <- function(x, fill = "grey", line = "black",...) {
 
   if(!inherits(x,"hist_estimate")) {
     stop("object must be of class 'hist_estimate'")
+  }
+
+  binwidth <- if (inherits(x, "frequency_polygon")) {
+    x$binwidth
+  } else if (inherits(x, "ash_density")) {
+    x$x[2] - x$x[1]
   }
 
   df <- data.frame(value = x$data)
@@ -53,8 +60,8 @@ plot.hist_estimate <- function(x, bins = 30, ...) {
 
   p <- ggplot(data = df, aes(x = value)) +
     geom_histogram(aes(y = after_stat(density)),
-                   bins = bins, fill = "grey", colour = "white") +
-    geom_line(data = dens, aes(x = x, y = y), linewidth = 1.5) +
+                   binwidth = binwidth, fill = fill, colour = "white") +
+    geom_line(data = dens, aes(x = x, y = y), color = line,linewidth = 1.5) +
     theme_bw() +
     ggplot2::xlab("waiting") +
     ggplot2::ylab("density") +

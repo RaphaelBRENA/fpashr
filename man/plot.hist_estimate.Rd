@@ -4,13 +4,15 @@
 \alias{plot.hist_estimate}
 \title{Plot histogram density estimates}
 \usage{
-\method{plot}{hist_estimate}(x, bins = 30, ...)
+\method{plot}{hist_estimate}(x, fill = "grey", line = "black", ...)
 }
 \arguments{
 \item{x}{An object of class \code{"hist_estimate"} produced by \code{compute_ash()}
 or \code{compute_fp())}.}
 
-\item{bins}{Number of bins used for histogram.}
+\item{fill}{The colour of the histogram bars, default is grey.}
+
+\item{line}{The colour of the line, default is black.}
 
 \item{...}{Catches unused arguments to \code{plot}}
 }

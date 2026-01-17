@@ -16,7 +16,7 @@ compute_fp(x, bins = 10, density = TRUE)
 \value{
 An object of class \code{"frequency_polygon"} containing:
   \itemize{
-  \item mids: Centerpoints of each histogram bin
+  \item x: Centerpoints of each histogram bin
   \item y: Counts or densities at each midpoint
   \item binwidth: The width of the bins
 }
