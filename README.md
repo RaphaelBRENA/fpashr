@@ -14,15 +14,22 @@
 **fpashr** is an R package that Provides tools for constructing
 continuous density estimators based on histogram refinements.
 
-    1. `compute_fp()`: for calculating values needed to construct a frequency polygon from numeric data.
+1.  `compute_fp()`: for calculating values needed to construct a
+    frequency polygon from numeric data.
 
-    2. `compute_ash()`: Estimates density by averaging multiple shifted histograms.
+2.  `compute_ash()`: Estimates density by averaging multiple shifted
+    histograms.
 
-    3. `plot.hist_estimate()` method:  An S3 method that plots a histogram of a density estimate obtained from continous             histogram estimators. The estimates may be produced by either a frequency polygon or an average shifted polygon.
+3.  `plot.hist_estimate()` method: An S3 method that plots a histogram
+    of a density estimate obtained from continous histogram estimators.
+    The estimates may be produced by either a frequency polygon or an
+    average shifted polygon.
 
-    4. `validate_density()`:  Uses numerical integration to verify that the total area under a density estimate is                   approximately equal to 1. 
+4.  `validate_density()`: Uses numerical integration to verify that the
+    total area under a density estimate is approximately equal to 1.
 
-    Typically, these functions are applied sequentially. A demonstration of the typical workflow of the `fpashr` package follows below.
+Typically, these functions are applied sequentially. A demonstration of
+the typical workflow of the `fpashr` package follows below.
 
 ## Installation
 
@@ -52,7 +59,7 @@ A histogram can be created using our S3 method
 plot(fp)
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" alt="" width="100%" style="display: block; margin: auto;" />
 
 The density estimate can be calculated and validated numerically
 
